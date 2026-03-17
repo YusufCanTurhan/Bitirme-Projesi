@@ -1,47 +1,31 @@
 {
   "destinations": [
     {
-      "id": 1,
+      "id": "1",
       "city": "Amsterdam",
       "country": "Hollanda",
       "currency": "EUR",
-      "dailyCosts": {
-        "food": 45,
-        "transport": 9,
-        "coffee": 4,
-        "museums": 25
-      }
+      "dailyCosts": { "food": 45, "transport": 9, "coffee": 4, "museums": 25 },
+      "places": [
+        { "id": "p1", "content": "Rijksmuseum", "category": "Müze", "cost": 22.50, "rating": 4.8, "image": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Rijksmuseum_in_Amsterdam.jpg" },
+        { "id": "p2", "content": "Van Gogh Müzesi", "category": "Müze", "cost": 20.00, "rating": 4.7, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Van_Gogh_Museum.jpg/1920px-Van_Gogh_Museum.jpg" },
+        { "id": "p3", "content": "Anne Frank'ın Evi", "category": "Tarihi Yer", "cost": 16.00, "rating": 4.9, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/AnneFrankHouseAmsterdamtheNetherlands.jpg/640px-AnneFrankHouseAmsterdamtheNetherlands.jpg" },
+        { "id": "p4", "content": "Vondelpark Bisikleti", "category": "Aktivite", "cost": 12.00, "rating": 4.6, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Bicycle_bike_Fahrrad_v%C3%A9lo_Amsterdam_Armbrug.jpg/640px-Bicycle_bike_Fahrrad_v%C3%A9lo_Amsterdam_Armbrug.jpg" },
+        { "id": "p5", "content": "Kanal Tekne Turu", "category": "Aktivite", "cost": 19.50, "rating": 4.5, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Amsterdam_Canal_Tour.jpg/640px-Amsterdam_Canal_Tour.jpg" },
+        { "id": "p6", "content": "Heineken Experience", "category": "Eğlence", "cost": 23.00, "rating": 4.4, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Heineken_Experience%2C_Amsterdam_%28Ank_Kumar%2C_Infosys_%29_14.jpg/640px-Heineken_Experience%2C_Amsterdam_%28Ank_Kumar%2C_Infosys_%29_14.jpg" },
+        { "id": "p7", "content": "Foodhallen Akşam", "category": "Yemek", "cost": 35.00, "rating": 4.7, "image": "https://www.amsterdam.net/en/wp-content/uploads/sites/136/market-foodhallen-amsterdam-hd.jpg" },
+        { "id": "p8", "content": "Zaanse Schans", "category": "Gezi", "cost": 15.00, "rating": 4.8, "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAg1tpT-iX8tSYFrPZfRTr79mJncntnrgXHg&s" }
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "city": "Prag",
       "country": "Çekya",
       "currency": "CZK",
-      "dailyCosts": {
-        "food": 600,
-        "transport": 120,
-        "coffee": 65,
-        "museums": 300
-      }
+      "dailyCosts": { "food": 600, "transport": 120, "coffee": 65, "museums": 300 },
+      "places": []
     }
   ],
-  "flights": [
-    {
-      "id": 101,
-      "destinationId": 1,
-      "airline": "KLM",
-      "price": 180,
-      "currency": "EUR"
-    }
-  ],
-  "hotels": [
-    {
-      "id": 201,
-      "destinationId": 1,
-      "name": "Central Canal Hotel",
-      "pricePerNight": 110,
-      "currency": "EUR",
-      "rating": 4.5
-    }
-  ]
+  "flights": [],
+  "hotels": []
 }
