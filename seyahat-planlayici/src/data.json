@@ -1,0 +1,76 @@
+{
+  "destinations": [
+    {
+      "id": "1",
+      "city": "Amsterdam",
+      "country": "Hollanda",
+      "currency": "EUR",
+      "dailyCosts": { "food": 45, "transport": 9, "coffee": 4, "museums": 25 },
+      "places": [
+        { "id": "p1", "content": "Rijksmuseum", "category": "Müze", "cost": 22.50, "rating": 4.8, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Rijksmuseum_Amsterdam_facade_and_basin.jpg/800px-Rijksmuseum_Amsterdam_facade_and_basin.jpg" },
+        { "id": "p2", "content": "Van Gogh Müzesi", "category": "Müze", "cost": 20.00, "rating": 4.7, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Van_Gogh_Museum_Amsterdam_-_2017.jpg/800px-Van_Gogh_Museum_Amsterdam_-_2017.jpg" },
+        { "id": "p3", "content": "Anne Frank'ın Evi", "category": "Tarihi Yer", "cost": 16.00, "rating": 4.9, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg/800px-Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg" },
+        { "id": "p4", "content": "Vondelpark Bisikleti", "category": "Aktivite", "cost": 12.00, "rating": 4.6, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vondelpark_2.jpg/800px-Vondelpark_2.jpg" },
+        { "id": "p5", "content": "Kanal Tekne Turu", "category": "Aktivite", "cost": 19.50, "rating": 4.5, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Amsterdam_-_panoramio_%2845%29.jpg/800px-Amsterdam_-_panoramio_%2845%29.jpg" },
+        { "id": "p6", "content": "Heineken Experience", "category": "Eğlence", "cost": 23.00, "rating": 4.4, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Heineken_Experience%2C_Amsterdam.jpg/800px-Heineken_Experience%2C_Amsterdam.jpg" },
+        { "id": "p7", "content": "Foodhallen Akşam", "category": "Yemek", "cost": 35.00, "rating": 4.7, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Foodhallen_Amsterdam_2015.jpg/800px-Foodhallen_Amsterdam_2015.jpg" },
+        { "id": "p8", "content": "Zaanse Schans", "category": "Gezi", "cost": 15.00, "rating": 4.8, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Zaanse_Schans_08.JPG/800px-Zaanse_Schans_08.JPG" }
+      ]
+    },
+    {
+      "id": "2",
+      "city": "Prag",
+      "country": "Çekya",
+      "currency": "CZK",
+      "dailyCosts": { "food": 600, "transport": 120, "coffee": 65, "museums": 300 },
+      "places": []
+    },
+    {
+      "id": "3",
+      "city": "Paris",
+      "country": "Fransa",
+      "currency": "EUR",
+      "dailyCosts": { "food": 60, "transport": 10, "coffee": 5, "museums": 30 },
+      "places": []
+    },
+    {
+      "id": "4",
+      "city": "Roma",
+      "country": "İtalya",
+      "currency": "EUR",
+      "dailyCosts": { "food": 50, "transport": 8, "coffee": 3, "museums": 25 },
+      "places": []
+    },
+    {
+      "id": "5",
+      "city": "Barselona",
+      "country": "İspanya",
+      "currency": "EUR",
+      "dailyCosts": { "food": 45, "transport": 10, "coffee": 3, "museums": 20 },
+      "places": []
+    },
+    {
+      "id": "6",
+      "city": "Tokyo",
+      "country": "Japonya",
+      "currency": "JPY",
+      "dailyCosts": { "food": 5000, "transport": 1000, "coffee": 500, "museums": 2000 },
+      "places": []
+    },
+    {
+      "id": "7",
+      "city": "İstanbul",
+      "country": "Türkiye",
+      "currency": "TRY",
+      "dailyCosts": { "food": 1000, "transport": 150, "coffee": 120, "museums": 500 },
+      "places": []
+    }
+  ],
+  "flights": [],
+  "hotels": [],
+  "features": {
+    "bannerTitle": "Sevdiğiniz her şey için yapılacak şeyler bulun",
+    "bannerText": "400.000'i aşkın deneyime göz atın ve hayalinizdeki rotayı saniyeler içinde planlayın.",
+    "bannerImage": "https://images.unsplash.com/photo-1579033461380-adb47c3eb938?q=80&w=1280&auto=format&fit=crop"
+  }
+}
