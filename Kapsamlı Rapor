@@ -1,0 +1,8 @@
+PROJE İLERLEME RAPORU
+Projenin Amacı ve Altyapı: React.js ve Tailwind CSS kullanılarak geliştirilen "Gezi Mimarı", kullanıcıların seyahat rotalarını sürükle-bırak (drag-and-drop) yöntemiyle planlayabildikleri bir web uygulamasıdır. Veri yönetimi, sistemin bağımsız ve hızlı çalışabilmesi için statik JSON altyapısıyla kurgulanmıştır.
+Ana Sayfa Geliştirmeleri (Home.jsx): Modern web standartlarına uygun, cam efekti barındıran temiz bir arayüz tasarlanmış ve küresel şehirlerin listelendiği dinamik bir destinasyon galerisi oluşturulmuştur.
+Planlama Motoru (Planla.jsx): Seçilen şehre ait mekanların listelendiği, anlık bütçe hesaplaması, tarih seçimi ve kategori filtrelemesi yapabilen işlevsel bir planlama panosu geliştirilmiştir.
+Teknik İyileştirmeler: Sürükle-bırak kütüphanesi ile CSS özellikleri arasındaki katman (z-index) çakışmaları ve görsel kayma hataları tespit edilerek düzeltilmiş, fizik motoru stabil hale getirilmiştir. Ayrıca JSON veritabanı yeni şehirlerle genişletilmiştir.
+Anlık Bütçe Takibi: Kullanıcı bir mekanı gün planına sürüklediğinde, o mekanın maliyetinin genel bütçeye anlık olarak yansıması sağlanmıştır.
+Arama ve Filtreleme: Gezilecek yerler listesi içinde anlık metin araması yapabilen ve kategoriye (Müze, Aktivite, Yemek vb.) göre filtreleme sunan fonksiyonlar kodlanmıştır.
+Tarih Yönetimi: Gidiş ve dönüş tarihlerinin seçilebileceği HTML5 entegreli kullanıcı girdileri eklenmiştir.
