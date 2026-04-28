@@ -7,15 +7,15 @@
       "currency": "EUR",
       "dailyCosts": { "food": 45, "transport": 9, "coffee": 4, "museums": 25 },
       "places": [
-        { "id": "p1", "content": "Rijksmuseum", "category": "Müze", "cost": 22.50, "rating": 4.8, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Rijksmuseum_Amsterdam_facade_and_basin.jpg/800px-Rijksmuseum_Amsterdam_facade_and_basin.jpg" },
-        { "id": "p2", "content": "Van Gogh Müzesi", "category": "Müze", "cost": 20.00, "rating": 4.7, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Van_Gogh_Museum_Amsterdam_-_2017.jpg/800px-Van_Gogh_Museum_Amsterdam_-_2017.jpg" },
-        { "id": "p3", "content": "Anne Frank'ın Evi", "category": "Tarihi Yer", "cost": 16.00, "rating": 4.9, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg/800px-Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg" },
-        { "id": "p4", "content": "Vondelpark Bisikleti", "category": "Aktivite", "cost": 12.00, "rating": 4.6, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vondelpark_2.jpg/800px-Vondelpark_2.jpg" },
-        { "id": "p5", "content": "Kanal Tekne Turu", "category": "Aktivite", "cost": 19.50, "rating": 4.5, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Amsterdam_-_panoramio_%2845%29.jpg/800px-Amsterdam_-_panoramio_%2845%29.jpg" },
-        { "id": "p6", "content": "Heineken Experience", "category": "Eğlence", "cost": 23.00, "rating": 4.4, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Heineken_Experience%2C_Amsterdam.jpg/800px-Heineken_Experience%2C_Amsterdam.jpg" },
-        { "id": "p7", "content": "Foodhallen Akşam", "category": "Yemek", "cost": 35.00, "rating": 4.7, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Foodhallen_Amsterdam_2015.jpg/800px-Foodhallen_Amsterdam_2015.jpg" },
-        { "id": "p8", "content": "Zaanse Schans", "category": "Gezi", "cost": 15.00, "rating": 4.8, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Zaanse_Schans_08.JPG/800px-Zaanse_Schans_08.JPG" }
-      ]
+  { "id": "p1", "content": "Rijksmuseum", "category": "Müze", "cost": 22.50, "rating": 4.8, "lat": 52.359997, "lng": 4.885218, "description": "Hollanda'nın sanat ve tarihine adanmış ulusal müzesidir.", "image": "https://picsum.photos/400" },
+  { "id": "p2", "content": "Van Gogh Müzesi", "category": "Müze", "cost": 20.00, "rating": 4.7, "lat": 52.358415, "lng": 4.881075, "description": "Dünyanın en geniş Van Gogh koleksiyonu burada yer alır.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Van_Gogh_Museum_Amsterdam_-_2017.jpg/800px-Van_Gogh_Museum_Amsterdam_-_2017.jpg" },
+  { "id": "p3", "content": "Anne Frank'ın Evi", "category": "Tarihi Yer", "cost": 16.00, "rating": 4.9, "lat": 52.375218, "lng": 4.883976, "description": "İkinci Dünya Savaşı'nın en hüzünlü hatıralarından biridir.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg/800px-Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg" },
+  { "id": "p4", "content": "Vondelpark", "category": "Aktivite", "cost": 0.00, "rating": 4.6, "lat": 52.357994, "lng": 4.868648, "description": "Şehrin kalbinde devasa ve yemyeşil bir kaçış noktası.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vondelpark_2.jpg/800px-Vondelpark_2.jpg" },
+  { "id": "p5", "content": "Kanal Tekne Turu", "category": "Aktivite", "cost": 19.50, "rating": 4.5, "lat": 52.379189, "lng": 4.899431, "description": "Amsterdam kanallarını suyun içinden keşfedin.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Amsterdam_-_panoramio_%2845%29.jpg/800px-Amsterdam_-_panoramio_%2845%29.jpg" },
+  { "id": "p6", "content": "Heineken Experience", "category": "Eğlence", "cost": 23.00, "rating": 4.4, "lat": 52.357989, "lng": 4.892224, "description": "Meşhur biranın tarihi fabrikasında interaktif bir deneyim.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Heineken_Experience%2C_Amsterdam.jpg/800px-Heineken_Experience%2C_Amsterdam.jpg" },
+  { "id": "p7", "content": "Foodhallen", "category": "Yemek", "cost": 35.00, "rating": 4.7, "lat": 52.366710, "lng": 4.867332, "description": "Eski bir tramvay deposunda gurme sokak lezzetleri.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Foodhallen_Amsterdam_2015.jpg/800px-Foodhallen_Amsterdam_2015.jpg" },
+  { "id": "p8", "content": "Zaanse Schans", "category": "Gezi", "cost": 15.00, "rating": 4.8, "lat": 52.473553, "lng": 4.822363, "description": "Tarihi yel değirmenlerinin bulunduğu rüya gibi bir kasaba.", "image": "https://images.unsplash.com/photo-1518331539958-940738914610?q=80&w=400&h=300&fit=crop" }
+]
     },
     {
       "id": "2",
@@ -65,6 +65,8 @@
       "dailyCosts": { "food": 1000, "transport": 150, "coffee": 120, "museums": 500 },
       "places": []
     }
+    
+    
   ],
   "flights": [],
   "hotels": [],

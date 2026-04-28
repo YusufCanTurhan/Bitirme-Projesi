@@ -13,28 +13,7 @@ function Home() {
       <div className="absolute top-[20%] right-[-5%] w-[30rem] h-[30rem] bg-fuchsia-400/20 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* 1. Yüzen Header (Floating Navbar) */}
-      <header className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 flex justify-between items-center px-8 py-4 bg-white/70 backdrop-blur-xl rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-gradient-to-br from-indigo-600 to-fuchsia-500 rounded-full text-white flex items-center justify-center text-sm font-black shadow-lg shadow-indigo-500/30">GM</div>
-          <span className="text-xl font-bold tracking-tight text-gray-800">GeziMimarı</span>
-        </div>
-        
-        <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-gray-500">
-          <span className="text-indigo-600 cursor-pointer">Keşfedin</span>
-          <span className="hover:text-indigo-600 transition-colors cursor-pointer">Nasıl Çalışır?</span>
-          <span className="hover:text-indigo-600 transition-colors cursor-pointer">Hakkımızda</span>
-        </nav>
-        
-        <div className="flex items-center gap-4">
-          <Link to="/planla/1" className="relative group overflow-hidden rounded-full p-[1px]">
-            <span className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500 rounded-full opacity-70 group-hover:opacity-100 transition-opacity duration-300"></span>
-            <div className="relative bg-white px-6 py-2.5 rounded-full text-sm font-bold text-gray-900 group-hover:bg-transparent group-hover:text-white transition-all duration-300">
-              Uygulamaya Git
-            </div>
-          </Link>
-        </div>
-      </header>
-
+      
       <main className="pt-40 pb-20 px-8 max-w-7xl mx-auto relative z-10">
         
         {/* 2. Hero Section (Sürükle-Bırak Vurgusu) */}
