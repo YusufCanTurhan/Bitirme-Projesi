@@ -6,15 +6,19 @@ import Harita from '../components/Harita'
 
 function Planla() {
   const { id } = useParams()
-  // Seçilen şehri veritabanından buluyoruz
+  
+  // 1. Şehri bul:
   const destination = appData.destinations.find(d => d.id === id)
+  
+  // 2. YENİ EKLENEN SATIR: Sadece o şehre ait mekanları filtrele:
+  const destinationPlaces = appData.places.filter(p => p.destinationId === id)
 
   // Sürükle-bırak kolonlarının başlangıç durumu
   const [columns, setColumns] = useState({
     places: {
       id: 'places',
-      title: 'Gezilecek Yerler',
-      items: destination?.places || []
+      title: 'Mekan Havuzu',
+      items: destinationPlaces // <--- BURAYI DEĞİŞTİRDİK
     },
     day1: {
       id: 'day1',
@@ -67,7 +71,7 @@ function Planla() {
       {/* z-0 vererek sürükleme kartlarının haritanın altında kalmamasını sağladık */}
       <div className="hidden lg:block w-[55%] h-full relative z-0">
         <Harita 
-          places={destination?.places || []} 
+          places={destinationPlaces} // <--- BURAYI DEĞİŞTİRDİK
           routePlaces={columns.day1.items} 
         />
         {/* Harita üzerine yüzen geri dön butonu */}

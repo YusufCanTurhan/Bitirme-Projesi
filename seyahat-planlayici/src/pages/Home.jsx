@@ -83,10 +83,10 @@ function Home() {
             {destinations.map((dest, idx) => (
               <Link to={`/planla/${dest.id}`} key={dest.id} className={`group relative rounded-[2rem] overflow-hidden shadow-md border border-slate-100 block ${idx === 0 ? 'lg:col-span-2 aspect-[21/9] lg:aspect-auto' : 'aspect-[4/3]'}`}>
                 <img 
-                  src={dest.places?.[0]?.image || 'https://placehold.co/800x600/e2e8f0/64748b?text=Şehir'} 
-                  alt={dest.city} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+  src={dest.coverImage || 'https://placehold.co/800x600/e2e8f0/64748b?text=Şehir'} 
+  alt={dest.city} 
+  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+/>
                 
                 {/* Özgün Gradyan ve İçerik Yerleşimi */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-between p-6 md:p-8">

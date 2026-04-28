@@ -1,78 +1,160 @@
 {
   "destinations": [
     {
-      "id": "1",
+      "id": "amsterdam",
       "city": "Amsterdam",
       "country": "Hollanda",
-      "currency": "EUR",
-      "dailyCosts": { "food": 45, "transport": 9, "coffee": 4, "museums": 25 },
-      "places": [
-  { "id": "p1", "content": "Rijksmuseum", "category": "Müze", "cost": 22.50, "rating": 4.8, "lat": 52.359997, "lng": 4.885218, "description": "Hollanda'nın sanat ve tarihine adanmış ulusal müzesidir.", "image": "https://picsum.photos/400" },
-  { "id": "p2", "content": "Van Gogh Müzesi", "category": "Müze", "cost": 20.00, "rating": 4.7, "lat": 52.358415, "lng": 4.881075, "description": "Dünyanın en geniş Van Gogh koleksiyonu burada yer alır.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Van_Gogh_Museum_Amsterdam_-_2017.jpg/800px-Van_Gogh_Museum_Amsterdam_-_2017.jpg" },
-  { "id": "p3", "content": "Anne Frank'ın Evi", "category": "Tarihi Yer", "cost": 16.00, "rating": 4.9, "lat": 52.375218, "lng": 4.883976, "description": "İkinci Dünya Savaşı'nın en hüzünlü hatıralarından biridir.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg/800px-Anne_Frank_House_in_Amsterdam%2C_Netherlands.jpg" },
-  { "id": "p4", "content": "Vondelpark", "category": "Aktivite", "cost": 0.00, "rating": 4.6, "lat": 52.357994, "lng": 4.868648, "description": "Şehrin kalbinde devasa ve yemyeşil bir kaçış noktası.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vondelpark_2.jpg/800px-Vondelpark_2.jpg" },
-  { "id": "p5", "content": "Kanal Tekne Turu", "category": "Aktivite", "cost": 19.50, "rating": 4.5, "lat": 52.379189, "lng": 4.899431, "description": "Amsterdam kanallarını suyun içinden keşfedin.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Amsterdam_-_panoramio_%2845%29.jpg/800px-Amsterdam_-_panoramio_%2845%29.jpg" },
-  { "id": "p6", "content": "Heineken Experience", "category": "Eğlence", "cost": 23.00, "rating": 4.4, "lat": 52.357989, "lng": 4.892224, "description": "Meşhur biranın tarihi fabrikasında interaktif bir deneyim.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Heineken_Experience%2C_Amsterdam.jpg/800px-Heineken_Experience%2C_Amsterdam.jpg" },
-  { "id": "p7", "content": "Foodhallen", "category": "Yemek", "cost": 35.00, "rating": 4.7, "lat": 52.366710, "lng": 4.867332, "description": "Eski bir tramvay deposunda gurme sokak lezzetleri.", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Foodhallen_Amsterdam_2015.jpg/800px-Foodhallen_Amsterdam_2015.jpg" },
-  { "id": "p8", "content": "Zaanse Schans", "category": "Gezi", "cost": 15.00, "rating": 4.8, "lat": 52.473553, "lng": 4.822363, "description": "Tarihi yel değirmenlerinin bulunduğu rüya gibi bir kasaba.", "image": "https://images.unsplash.com/photo-1518331539958-940738914610?q=80&w=400&h=300&fit=crop" }
-]
+      "currency": "€",
+      "coverImage": "/images/amsterdam-cover.jpg",
+      "description": "Kanalları, tarihi dokusu ve eşsiz müzeleriyle Kuzey'in Venedik'i."
     },
     {
-      "id": "2",
-      "city": "Prag",
-      "country": "Çekya",
-      "currency": "CZK",
-      "dailyCosts": { "food": 600, "transport": 120, "coffee": 65, "museums": 300 },
-      "places": []
-    },
-    {
-      "id": "3",
-      "city": "Paris",
-      "country": "Fransa",
-      "currency": "EUR",
-      "dailyCosts": { "food": 60, "transport": 10, "coffee": 5, "museums": 30 },
-      "places": []
-    },
-    {
-      "id": "4",
+      "id": "roma",
       "city": "Roma",
       "country": "İtalya",
-      "currency": "EUR",
-      "dailyCosts": { "food": 50, "transport": 8, "coffee": 3, "museums": 25 },
-      "places": []
+      "currency": "€",
+      "coverImage": "/images/roma-cover.jpg",
+      "description": "Antik kalıntıları ve muazzam mutfağıyla açık hava müzesi."
     },
     {
-      "id": "5",
-      "city": "Barselona",
-      "country": "İspanya",
-      "currency": "EUR",
-      "dailyCosts": { "food": 45, "transport": 10, "coffee": 3, "museums": 20 },
-      "places": []
-    },
-    {
-      "id": "6",
-      "city": "Tokyo",
-      "country": "Japonya",
-      "currency": "JPY",
-      "dailyCosts": { "food": 5000, "transport": 1000, "coffee": 500, "museums": 2000 },
-      "places": []
-    },
-    {
-      "id": "7",
-      "city": "İstanbul",
-      "country": "Türkiye",
-      "currency": "TRY",
-      "dailyCosts": { "food": 1000, "transport": 150, "coffee": 120, "museums": 500 },
-      "places": []
-    }
-    
-    
-  ],
-  "flights": [],
-  "hotels": [],
-  "features": {
-    "bannerTitle": "Sevdiğiniz her şey için yapılacak şeyler bulun",
-    "bannerText": "400.000'i aşkın deneyime göz atın ve hayalinizdeki rotayı saniyeler içinde planlayın.",
-    "bannerImage": "https://images.unsplash.com/photo-1579033461380-adb47c3eb938?q=80&w=1280&auto=format&fit=crop"
+    "id": "paris",
+    "city": "Paris",
+    "country": "Fransa",
+    "currency": "€",
+    "coverImage": "/images/paris-cover.jpg",
+    "description": "Aşkın ve sanatın başkenti, büyüleyici mimarisiyle ünlü."
+  },
+  {
+    "id": "london",
+    "city": "Londra",
+    "country": "İngiltere",
+    "currency": "£",
+    "coverImage": "/images/london-cover.jpg",
+    "description": "Tarihi dokusu ve modern yaşamın iç içe geçtiği metropol."
+  },
+  {
+    "id": "newyork",
+    "city": "New York",
+    "country": "ABD",
+    "currency": "$",
+    "coverImage": "/images/newyork-cover.jpg",
+    "description": "Hiç uyumayan şehir, gökdelenleri ve enerjisiyle meşhur."
+  },
+  {
+    "id": "tokyo",
+    "city": "Tokyo",
+    "country": "Japonya",
+    "currency": "¥",
+    "coverImage": "/images/tokyo-cover.jpg",
+    "description": "Gelenek ve teknolojinin kusursuz birleşimi."
+  },
+  {
+    "id": "barcelona",
+    "city": "Barcelona",
+    "country": "İspanya",
+    "currency": "€",
+    "coverImage": "/images/barcelona-cover.jpg",
+    "description": "Sanat, deniz ve eğlencenin buluştuğu canlı şehir."
+  },
+  {
+    "id": "dubai",
+    "city": "Dubai",
+    "country": "BAE",
+    "currency": "د.إ",
+    "coverImage": "/images/dubai-cover.jpg",
+    "description": "Lüks yaşam ve çölün ortasında yükselen modern şehir."
+  },
+  {
+    "id": "sydney",
+    "city": "Sydney",
+    "country": "Avustralya",
+    "currency": "A$",
+    "coverImage": "/images/sydney-cover.jpg",
+    "description": "İkonik opera binası ve sahilleriyle ünlü."
+  },
+  {
+    "id": "berlin",
+    "city": "Berlin",
+    "country": "Almanya",
+    "currency": "€",
+    "coverImage": "/images/berlin-cover.jpg",
+    "description": "Tarihi ve kültürel zenginliğiyle dikkat çeken şehir."
+  },
+
+  {
+    "id": "istanbul",
+    "city": "İstanbul",
+    "country": "Türkiye",
+    "currency": "₺",
+    "coverImage": "/images/istanbul-cover.jpg",
+    "description": "İki kıtayı birleştiren eşsiz tarihi ve kültürel miras."
   }
+  ],
+  "places": [
+    {
+      "id": "place-ams-1",
+      "destinationId": "amsterdam",
+      "content": "Rijksmuseum",
+      "description": "Hollanda'nın ulusal müzesi. Rembrandt ve Vermeer'in en ünlü eserlerine ev sahipliği yapar.",
+      "category": "Müze",
+      "tags": ["Tarihi", "Sanat", "İç Mekan"],
+      "cost": 22,
+      "estimatedTime": "120 dk",
+      "image": "/images/rijksmuseum.jpg",
+      "lat": 52.3600,
+      "lng": 4.8852
+    },
+    {
+      "id": "place-ams-2",
+      "destinationId": "amsterdam",
+      "content": "Vondelpark",
+      "description": "Şehrin en büyük ve en ünlü şehir parkı. Bisiklete binmek veya piknik yapmak için ideal.",
+      "category": "Açık Hava",
+      "tags": ["Doğa", "Ücretsiz", "Dinlenme"],
+      "cost": 0,
+      "estimatedTime": "90 dk",
+      "image": "/images/vondelpark.jpg",
+      "lat": 52.3580,
+      "lng": 4.8686
+    },
+    {
+      "id": "place-ams-3",
+      "destinationId": "amsterdam",
+      "content": "Anne Frank'ın Evi",
+      "description": "II. Dünya Savaşı sırasında Anne Frank'ın saklandığı ve günlüğünü yazdığı tarihi ev.",
+      "category": "Tarihi Yer",
+      "tags": ["Tarihi", "Kültürel", "Önemli"],
+      "cost": 16,
+      "estimatedTime": "60 dk",
+      "image": "/images/anne-frank.jpg",
+      "lat": 52.3752,
+      "lng": 4.8840
+    },
+    {
+      "id": "place-ams-4",
+      "destinationId": "amsterdam",
+      "content": "Kanal Turu",
+      "description": "Amsterdam'ın tarihi yerlerini bir kayıkla gezin",
+      "category": "Gezi",
+      "tags": ["Tarihi", "Kültürel", "Önemli"],
+      "cost": 25,
+      "estimatedTime": "60 dk",
+      "image": "/images/canaltour.jpg",
+      "lat": 52.3755,
+      "lng": 4.8935
+    },
+    {
+      "id": "place-rom-1",
+      "destinationId": "roma",
+      "content": "Kolezyum",
+      "description": "Gladyatör dövüşlerinin yapıldığı ikonik antik arena.",
+      "category": "Tarihi Yer",
+      "tags": ["Antik", "Mimari", "Tarihi"],
+      "cost": 18,
+      "estimatedTime": "150 dk",
+      "image": "/images/colosseum.jpg",
+      "lat": 41.8902,
+      "lng": 12.4922
+    }
+  ]
 }

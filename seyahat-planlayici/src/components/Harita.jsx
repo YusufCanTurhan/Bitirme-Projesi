@@ -1,92 +1,74 @@
-import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
+import { useEffect } from 'react'
+import L from 'leaflet' // Leaflet kütüphanesini ikonlar için çağırıyoruz
+import 'leaflet/dist/leaflet.css'
 
-// Gezi Mimarı Özel İkonu
-const placeIcon = L.divIcon({
-  className: 'bg-transparent',
-  html: `<div class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(79,70,229,0.5)] border-2 border-white transform transition-transform hover:scale-110">📍</div>`,
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32]
-});
-
-// Canlı Konum İkonu
-const userIcon = L.divIcon({
-  className: 'bg-transparent',
-  html: `<div class="relative flex h-6 w-6">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-6 w-6 bg-blue-600 border-2 border-white shadow-md"></span>
-        </div>`,
-  iconSize: [24, 24],
-  iconAnchor: [12, 12]
-});
-
-// YENİ: routePlaces prop'u eklendi
-function Harita({ places, routePlaces = [], cityCenter = [52.3676, 4.9041] }) {
-  const [userLocation, setUserLocation] = useState(null);
-
+// Harita kamerasını hareket ettiren yardımcı bileşen (Bunu biraz daha havalı yaptık, artık uçarak gidiyor)
+function HaritaYoneticisi({ merkez }) {
+  const map = useMap()
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-        },
-        (err) => console.log("Konum alınamadı:", err),
-        { enableHighAccuracy: true }
-      );
+    if (merkez) {
+      map.flyTo(merkez, 13, { duration: 1.5 }) // setView yerine flyTo kullandık, animasyonlu geçer
     }
-  }, []);
-
-  // YENİ: Günlük plana eklenen mekanların koordinatlarını sırayla alır
-  const polylinePositions = routePlaces
-    .filter(place => place.lat && place.lng)
-    .map(place => [place.lat, place.lng]);
-
-  return (
-    <div className="w-full h-full min-h-[500px] rounded-[2rem] overflow-hidden bg-slate-100 relative z-0">
-      <MapContainer center={cityCenter} zoom={13} className="w-full h-full" zoomControl={false}>
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-          attribution='&copy; OpenStreetMap'
-        />
-
-        {userLocation && (
-          <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
-            <Popup><span className="font-bold">Şu an buradasınız!</span></Popup>
-          </Marker>
-        )}
-
-        {/* YENİ: Gidilecek Yol Çizgisi (Mekanlar eklendikçe uzar) */}
-        {polylinePositions.length > 1 && (
-          <Polyline 
-            positions={polylinePositions} 
-            color="#D946EF" // Fuşya Rengi
-            weight={4} 
-            dashArray="10, 10" 
-            className="animate-pulse"
-          />
-        )}
-
-        {places.map((place) => (
-          place.lat && place.lng && (
-            <Marker key={place.id} position={[place.lat, place.lng]} icon={placeIcon}>
-              <Popup className="rounded-xl min-w-[200px]">
-                <div className="p-1">
-                  <img src={place.image} alt={place.content} className="w-full h-24 object-cover rounded-lg mb-2" />
-                  <h3 className="font-black text-slate-800">{place.content}</h3>
-                  <div className="text-xs font-bold text-indigo-600 mt-1">Tahmini: {place.cost} €</div>
-                </div>
-              </Popup>
-            </Marker>
-          )
-        ))}
-      </MapContainer>
-    </div>
-  );
+  }, [merkez, map])
+  return null
 }
 
-export default Harita;
+function Harita({ places, routePlaces }) {
+  const varsayilanMerkez = places.length > 0 ? [places[0].lat, places[0].lng] : [52.3676, 4.9041]
+
+  // SİHİRLİ DOKUNUŞ: Her mekan için o mekanın resmini içeren özel yuvarlak bir ikon yapıyoruz
+  const getCustomIcon = (imageUrl) => {
+    return L.divIcon({
+      className: 'bg-transparent border-none', // Leaflet'in varsayılan beyaz arka planını siler
+      html: `
+        <div style="width: 44px; height: 44px; border-radius: 50%; border: 3px solid #4f46e5; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); overflow: hidden; background-color: white; transform: translate(-50%, -50%); transition: all 0.3s ease;">
+          <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="pin" />
+        </div>
+      `,
+      iconSize: [0, 0], // Boyutu div içinden veriyoruz
+      popupAnchor: [0, -22] // Popup'ın resmin hemen üstünde açılması için
+    })
+  }
+
+  return (
+    <MapContainer 
+      center={varsayilanMerkez} 
+      zoom={13} 
+      style={{ height: '100%', width: '100%' }}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      
+      <HaritaYoneticisi merkez={varsayilanMerkez} />
+
+      {/* Mekan İşaretçileri (Artık özel resimli ikonlar kullanıyor) */}
+      {places.map((place) => (
+        <Marker 
+          key={place.id} 
+          position={[place.lat, place.lng]}
+          icon={getCustomIcon(place.image)}
+        >
+          {/* Tıklayınca açılan küçük pencereyi de güzelleştirdik */}
+          <Popup>
+            <div style={{ textAlign: 'center', margin: '-5px' }}>
+              <img src={place.image} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} alt="" />
+              <strong style={{ display: 'block', marginTop: '8px', color: '#1e293b' }}>{place.content}</strong>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      {/* Rota Çizgisi */}
+      {routePlaces.length > 1 && (
+        <Polyline 
+          positions={routePlaces.map(p => [p.lat, p.lng])} 
+          color="#4f46e5" 
+          weight={5}
+          dashArray="10, 10"
+        />
+      )}
+    </MapContainer>
+  )
+}
+
+export default Harita
