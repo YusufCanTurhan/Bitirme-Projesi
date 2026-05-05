@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import appData from '../data.json'
 
 function Home() {
+  // YENİ EKLENEN STATE: Arama kutusundaki yazıyı tutacak değişken
+  const [aramaMetni, setAramaMetni] = useState('');
+  
   const [destinations] = useState(appData.destinations)
 
   return (
@@ -41,8 +44,10 @@ function Home() {
             <input 
               type="text" 
               placeholder="Hangi şehri keşfetmek istersin? (Örn: Amsterdam, Prag...)" 
+              value={aramaMetni}
+              onChange={(e) => setAramaMetni(e.target.value)} 
               className="flex-1 bg-transparent border-none focus:outline-none text-slate-700 font-medium placeholder:text-slate-400 text-sm md:text-base"
-              readOnly
+              // readOnly YAZISINI SİLDİM, ÇÜNKÜ O YAZMAYA ENGEL OLUR
             />
             <Link to="/planla/1" className="bg-slate-900 text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-indigo-600 transition-colors shadow-lg shadow-slate-900/20 whitespace-nowrap">
               Planlamaya Başla
@@ -83,10 +88,10 @@ function Home() {
             {destinations.map((dest, idx) => (
               <Link to={`/planla/${dest.id}`} key={dest.id} className={`group relative rounded-[2rem] overflow-hidden shadow-md border border-slate-100 block ${idx === 0 ? 'lg:col-span-2 aspect-[21/9] lg:aspect-auto' : 'aspect-[4/3]'}`}>
                 <img 
-  src={dest.coverImage || 'https://placehold.co/800x600/e2e8f0/64748b?text=Şehir'} 
-  alt={dest.city} 
-  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-/>
+                  src={dest.coverImage || 'https://placehold.co/800x600/e2e8f0/64748b?text=Şehir'} 
+                  alt={dest.city} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
                 
                 {/* Özgün Gradyan ve İçerik Yerleşimi */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-between p-6 md:p-8">

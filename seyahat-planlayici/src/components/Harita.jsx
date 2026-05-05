@@ -1,74 +1,160 @@
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
-import { useEffect } from 'react'
-import L from 'leaflet' // Leaflet kütüphanesini ikonlar için çağırıyoruz
-import 'leaflet/dist/leaflet.css'
+import { useState, useEffect, useCallback } from 'react';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 
-// Harita kamerasını hareket ettiren yardımcı bileşen (Bunu biraz daha havalı yaptık, artık uçarak gidiyor)
-function HaritaYoneticisi({ merkez }) {
-  const map = useMap()
+const containerStyle = {
+  width: '100%',
+  height: '100%'
+};
+
+function Harita({ places, routePlaces, setRotaDetaylari }) {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+  });
+
+  const [map, setMap] = useState(null);
+  const [directions, setDirections] = useState(null);
+  
+  // YENİ: Hem tıklanan hem de üzerine gelinen mekanı ayrı ayrı takip ediyoruz
+  const [seciliMekan, setSeciliMekan] = useState(null);
+  const [hoveredPlace, setHoveredPlace] = useState(null);
+
+  const merkez = places.length > 0 
+    ? { lat: places[0].lat, lng: places[0].lng } 
+    : { lat: 52.3676, lng: 4.9041 };
+
   useEffect(() => {
-    if (merkez) {
-      map.flyTo(merkez, 13, { duration: 1.5 }) // setView yerine flyTo kullandık, animasyonlu geçer
+    if (!window.google || routePlaces.length < 2) {
+      setDirections(null);
+      return;
     }
-  }, [merkez, map])
-  return null
-}
 
-function Harita({ places, routePlaces }) {
-  const varsayilanMerkez = places.length > 0 ? [places[0].lat, places[0].lng] : [52.3676, 4.9041]
+    const directionsService = new window.google.maps.DirectionsService();
+    const origin = { lat: routePlaces[0].lat, lng: routePlaces[0].lng };
+    const destination = { lat: routePlaces[routePlaces.length - 1].lat, lng: routePlaces[routePlaces.length - 1].lng };
+    
+    const waypoints = routePlaces.slice(1, -1).map(place => ({
+      location: { lat: place.lat, lng: place.lng },
+      stopover: true
+    }));
 
-  // SİHİRLİ DOKUNUŞ: Her mekan için o mekanın resmini içeren özel yuvarlak bir ikon yapıyoruz
-  const getCustomIcon = (imageUrl) => {
-    return L.divIcon({
-      className: 'bg-transparent border-none', // Leaflet'in varsayılan beyaz arka planını siler
-      html: `
-        <div style="width: 44px; height: 44px; border-radius: 50%; border: 3px solid #4f46e5; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); overflow: hidden; background-color: white; transform: translate(-50%, -50%); transition: all 0.3s ease;">
-          <img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="pin" />
-        </div>
-      `,
-      iconSize: [0, 0], // Boyutu div içinden veriyoruz
-      popupAnchor: [0, -22] // Popup'ın resmin hemen üstünde açılması için
-    })
-  }
+    directionsService.route(
+      {
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: window.google.maps.TravelMode.WALKING, 
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          setDirections(result);
+          if (setRotaDetaylari) {
+            setRotaDetaylari(result.routes[0].legs);
+          }
+        }
+      }
+    );
+  }, [routePlaces]);
+
+  const onLoad = useCallback(function callback(map) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  useEffect(() => {
+    if (map && merkez) {
+      map.panTo(merkez);
+    }
+  }, [merkez, map]);
+
+  if (!isLoaded) return <div className="flex items-center justify-center h-full w-full bg-slate-100 text-slate-500 font-medium">Google Haritası Yükleniyor...</div>;
 
   return (
-    <MapContainer 
-      center={varsayilanMerkez} 
-      zoom={13} 
-      style={{ height: '100%', width: '100%' }}
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={merkez}
+      zoom={13}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+      options={{
+        mapTypeControl: false,
+        streetViewControl: false,
+      }}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      
-      <HaritaYoneticisi merkez={varsayilanMerkez} />
-
-      {/* Mekan İşaretçileri (Artık özel resimli ikonlar kullanıyor) */}
       {places.map((place) => (
-        <Marker 
-          key={place.id} 
-          position={[place.lat, place.lng]}
-          icon={getCustomIcon(place.image)}
-        >
-          {/* Tıklayınca açılan küçük pencereyi de güzelleştirdik */}
-          <Popup>
-            <div style={{ textAlign: 'center', margin: '-5px' }}>
-              <img src={place.image} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} alt="" />
-              <strong style={{ display: 'block', marginTop: '8px', color: '#1e293b' }}>{place.content}</strong>
-            </div>
-          </Popup>
-        </Marker>
+        <Marker
+          key={place.id}
+          position={{ lat: place.lat, lng: place.lng }}
+          onClick={() => setSeciliMekan(place)}
+          // YENİ: Mouse ile üzerine gelme ve çekme olayları
+          onMouseOver={() => setHoveredPlace(place)}
+          onMouseOut={() => setHoveredPlace(null)}
+        />
       ))}
 
-      {/* Rota Çizgisi */}
-      {routePlaces.length > 1 && (
-        <Polyline 
-          positions={routePlaces.map(p => [p.lat, p.lng])} 
-          color="#4f46e5" 
-          weight={5}
-          dashArray="10, 10"
+      {/* EFECT BURADA: hoveredPlace varsa InfoWindow açılır ve resim büyütülür */}
+      {(hoveredPlace || seciliMekan) && (
+        <InfoWindow
+    position={{ 
+      lat: (hoveredPlace || seciliMekan).lat, 
+      lng: (hoveredPlace || seciliMekan).lng 
+    }}
+    onCloseClick={() => {
+      setSeciliMekan(null);
+      setHoveredPlace(null);
+    }}
+    options={{ 
+      pixelOffset: new window.google.maps.Size(0, -35),
+      // Bu seçenek bazen titremeyi engellemeye yardımcı olur
+      disableAutoPan: true 
+    }}
+  >
+    {/* pointer-events-none ekleyerek farenin pencereyi bir 'duvar' gibi görmesini engelliyoruz */}
+    <div className="p-0 m-0 overflow-hidden rounded-xl w-64 bg-white shadow-2xl pointer-events-none select-none">
+      <div className="relative overflow-hidden h-32">
+        <img 
+          src={(hoveredPlace || seciliMekan).image} 
+          alt={(hoveredPlace || seciliMekan).content} 
+          // scale miktarını biraz düşürdük (1.1), geçişi yumuşattık
+          className="w-full h-full object-cover transition-transform duration-500 transform scale-110" 
+        />
+        <div className="absolute top-2 right-2">
+          <span className="bg-indigo-600 text-white text-[8px] font-black px-2 py-1 rounded-full uppercase tracking-tighter">
+            {(hoveredPlace || seciliMekan).category}
+          </span>
+        </div>
+      </div>
+      
+      <div className="p-3 text-left">
+        <h4 className="text-sm font-black text-slate-800 uppercase tracking-tight mb-1">
+          {(hoveredPlace || seciliMekan).content}
+        </h4>
+        
+        <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 font-medium">
+          {(hoveredPlace || seciliMekan).description}
+        </p>
+      </div>
+    </div>
+  </InfoWindow>
+      )}
+
+      {directions && (
+        <DirectionsRenderer 
+          directions={directions} 
+          options={{
+            suppressMarkers: true,
+            polylineOptions: {
+              strokeColor: '#4f46e5',
+              strokeWeight: 5,
+            }
+          }}
         />
       )}
-    </MapContainer>
-  )
+    </GoogleMap>
+  );
 }
 
-export default Harita
+export default Harita;

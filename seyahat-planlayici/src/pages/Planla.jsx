@@ -10,15 +10,18 @@ function Planla() {
   // 1. Şehri bul:
   const destination = appData.destinations.find(d => d.id === id)
   
-  // 2. YENİ EKLENEN SATIR: Sadece o şehre ait mekanları filtrele:
+  // 2. Sadece o şehre ait mekanları filtrele:
   const destinationPlaces = appData.places.filter(p => p.destinationId === id)
+
+  // YENİ EKLENEN STATE: Google Maps'ten gelen süre ve mesafe bilgileri burada tutulacak
+  const [rotaDetaylari, setRotaDetaylari] = useState([])
 
   // Sürükle-bırak kolonlarının başlangıç durumu
   const [columns, setColumns] = useState({
     places: {
       id: 'places',
       title: 'Mekan Havuzu',
-      items: destinationPlaces // <--- BURAYI DEĞİŞTİRDİK
+      items: destinationPlaces 
     },
     day1: {
       id: 'day1',
@@ -32,7 +35,6 @@ function Planla() {
     const { source, destination: dropDest } = result
     if (!dropDest) return
 
-    // Eğer aynı yere bırakıldıysa işlem yapma
     if (source.droppableId === dropDest.droppableId && source.index === dropDest.index) return
 
     const sourceCol = columns[source.droppableId]
@@ -42,14 +44,12 @@ function Planla() {
     const [removed] = sourceItems.splice(source.index, 1)
 
     if (source.droppableId === dropDest.droppableId) {
-      // Aynı kolon içinde sıralama değiştirme
       sourceItems.splice(dropDest.index, 0, removed)
       setColumns({
         ...columns,
         [source.droppableId]: { ...sourceCol, items: sourceItems }
       })
     } else {
-      // Farklı kolona taşıma
       destItems.splice(dropDest.index, 0, removed)
       setColumns({
         ...columns,
@@ -59,7 +59,7 @@ function Planla() {
     }
   }
 
-  // Toplam bütçe hesaplama (Sadece planlanan günlerdekiler)
+  // Toplam bütçe hesaplama 
   const totalCost = columns.day1.items.reduce((sum, item) => sum + (item.cost || 0), 0)
 
   if (!destination) return <div className="pt-40 text-center">Şehir bulunamadı.</div>
@@ -67,28 +67,25 @@ function Planla() {
   return (
     <div className="h-screen w-full bg-[#F8FAFC] font-sans text-gray-900 flex overflow-hidden">
       
-      {/* SOL KOLON: Tam Ekran Harita (%55 Genişlik) */}
-      {/* z-0 vererek sürükleme kartlarının haritanın altında kalmamasını sağladık */}
+      {/* SOL KOLON: Tam Ekran Harita */}
       <div className="hidden lg:block w-[55%] h-full relative z-0">
         <Harita 
-          places={destinationPlaces} // <--- BURAYI DEĞİŞTİRDİK
+          places={destinationPlaces} 
           routePlaces={columns.day1.items} 
+          setRotaDetaylari={setRotaDetaylari} // YENİ: Haritaya verileri göndermesi için yetki verdik
         />
-        {/* Harita üzerine yüzen geri dön butonu */}
         <Link to="/" className="absolute top-6 left-6 z-[1000] bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-full font-bold text-sm shadow-xl hover:bg-white transition-all border border-slate-100 flex items-center gap-2">
           <span className="text-lg">←</span> Ana Sayfa
         </Link>
       </div>
 
-      {/* SAĞ KOLON: Planlama Paneli (%45 Genişlik, Kaydırılabilir) */}
+      {/* SAĞ KOLON: Planlama Paneli */}
       <div className="w-full lg:w-[45%] h-full flex flex-col bg-white border-l border-slate-200 shadow-[-10px_0_30px_rgba(0,0,0,0.03)] relative z-10 overflow-hidden">
         
-        {/* Üst Bilgi Kartı (Sadece Başlık ve Bütçe) */}
+        {/* Üst Bilgi Kartı */}
         <div className="p-8 pb-6 shrink-0">
           <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2rem] p-8 text-white shadow-2xl relative overflow-hidden">
-            {/* Arka plan dekoratif daire */}
             <div className="absolute top-[-20%] right-[-10%] w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-            
             <div className="relative z-10">
               <h1 className="text-4xl font-black mb-3 tracking-tight">{destination?.city} Macerası</h1>
               <p className="text-indigo-100 text-sm font-medium mb-6 flex items-center gap-2">
@@ -131,7 +128,7 @@ function Planla() {
                   <div 
                     {...provided.droppableProps} 
                     ref={provided.innerRef}
-                    className={`space-y-4 min-h-[150px] rounded-[2rem] transition-all p-2 ${snapshot.isDraggingOver ? 'bg-indigo-50/50 ring-2 ring-indigo-100 ring-dashed' : ''}`}
+                    className={`space-y-3 min-h-[150px] rounded-[2rem] transition-all p-2 ${snapshot.isDraggingOver ? 'bg-indigo-50/50 ring-2 ring-indigo-100 ring-dashed' : ''}`}
                   >
                     {columns.day1.items.length === 0 && (
                        <div className="border-2 border-dashed border-slate-100 rounded-[2rem] p-12 text-center text-slate-400 text-sm font-medium bg-slate-50/50">
@@ -146,28 +143,43 @@ function Planla() {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`bg-white border border-slate-100 rounded-3xl p-5 shadow-sm flex gap-5 transition-all ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-indigo-500 scale-[1.02] z-[2000]' : 'hover:shadow-md'}`}
+                            className="flex flex-col"
                           >
-                            <div className="relative shrink-0">
-                              <img src={item.image} className="w-24 h-24 rounded-2xl object-cover shadow-inner" alt="" />
-                              <div className="absolute -top-2 -left-2 w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-black border-4 border-white">
-                                {index + 1}
+                            {/* Ana Mekan Kartı */}
+                            <div className={`bg-white border border-slate-100 rounded-3xl p-5 shadow-sm flex gap-5 transition-all ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-indigo-500 scale-[1.02] z-[2000]' : 'hover:shadow-md'}`}>
+                              <div className="relative shrink-0">
+                                <img src={item.image} className="w-24 h-24 rounded-2xl object-cover shadow-inner" alt="" />
+                                <div className="absolute -top-2 -left-2 w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-black border-4 border-white">
+                                  {index + 1}
+                                </div>
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex justify-between items-start mb-1">
+                                  <h4 className="font-black text-slate-800 text-lg">{item.content}</h4>
+                                  <span className="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100">
+                                    {item.cost === 0 ? 'Ücretsiz' : `${item.cost} ₺`}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-3">{item.description}</p>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full uppercase tracking-tighter">
+                                    {item.category}
+                                  </span>
+                                </div>
                               </div>
                             </div>
-                            <div className="flex-1">
-                              <div className="flex justify-between items-start mb-1">
-                                <h4 className="font-black text-slate-800 text-lg">{item.content}</h4>
-                                <span className="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100">
-                                  {item.cost === 0 ? 'Ücretsiz' : `${item.cost} €`}
+
+                            {/* YENİ: İki mekan arasındaki süre ve mesafe balonu */}
+                            {index < columns.day1.items.length - 1 && rotaDetaylari[index] && !snapshot.isDragging && (
+                              <div className="flex flex-col items-center justify-center mt-2 mb-1">
+                                <div className="w-0.5 h-3 bg-indigo-200 border-l-2 border-dashed border-indigo-300"></div>
+                                <span className="bg-indigo-50 px-4 py-1.5 rounded-full border border-indigo-100 flex items-center gap-2 text-xs font-black text-indigo-600 shadow-sm z-10">
+                                  🚶‍♂️ {rotaDetaylari[index].duration.text} • {rotaDetaylari[index].distance.text}
                                 </span>
+                                <div className="w-0.5 h-3 bg-indigo-200 border-l-2 border-dashed border-indigo-300"></div>
                               </div>
-                              <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-3">{item.description}</p>
-                              <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full uppercase tracking-tighter">
-                                  {item.category}
-                                </span>
-                              </div>
-                            </div>
+                            )}
+
                           </div>
                         )}
                       </Draggable>
@@ -178,7 +190,7 @@ function Planla() {
               </Droppable>
 
               {/* MEKAN HAVUZU (Keşfedilecek Yerler) */}
-              <div className="mt-12">
+              <div className="mt-8">
                  <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
                    <span className="w-2 h-2 bg-slate-300 rounded-full"></span>
                    Mekan Havuzu
