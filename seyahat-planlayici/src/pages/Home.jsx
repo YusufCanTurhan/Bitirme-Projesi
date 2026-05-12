@@ -3,10 +3,21 @@ import { Link } from 'react-router-dom'
 import appData from '../data.json'
 
 function Home() {
-  // YENİ EKLENEN STATE: Arama kutusundaki yazıyı tutacak değişken
   const [aramaMetni, setAramaMetni] = useState('');
-  
   const [destinations] = useState(appData.destinations)
+
+  // Arama metni boşsa liste boş döner, yazı yazıldıkça filtreleme yapar
+  const aramaSonuclari = aramaMetni.trim() === '' 
+    ? [] 
+    : destinations.filter(dest => {
+        const sehirAdi = dest.city ? dest.city.toLocaleLowerCase('tr-TR') : '';
+        const ulkeAdi = dest.country ? dest.country.toLocaleLowerCase('tr-TR') : '';
+        const aranan = aramaMetni.toLocaleLowerCase('tr-TR');
+        return sehirAdi.includes(aranan) || ulkeAdi.includes(aranan);
+      });
+
+  // "Planlamaya Başla" butonunun tıklanıldığında gideceği ilk sonucu seçiyoruz
+  const ilkSonucId = aramaSonuclari.length > 0 ? aramaSonuclari[0].id : '';
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans text-gray-900 overflow-hidden relative">
@@ -15,11 +26,9 @@ function Home() {
       <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-indigo-400/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute top-[20%] right-[-5%] w-[30rem] h-[30rem] bg-fuchsia-400/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-      {/* 1. Yüzen Header (Floating Navbar) */}
-      
       <main className="pt-40 pb-20 px-8 max-w-7xl mx-auto relative z-10">
         
-        {/* 2. Hero Section (Sürükle-Bırak Vurgusu) */}
+        {/* Hero Section */}
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-24 mt-8">
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full text-xs font-black tracking-widest uppercase mb-8 border border-indigo-100 text-indigo-600 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Yeni Nesil Seyahat Planlayıcı
@@ -36,26 +45,63 @@ function Home() {
             Hazır tur paketlerine sıkışma. Gideceğin mekanları seç, günlere sürükle ve anlık bütçeni takip ederek kendi kusursuz seyahatini adım adım tasarla.
           </p>
 
-          {/* Hedef Arama Kutusu (Gerçekçi Kullanım) */}
-          <div className="w-full max-w-2xl bg-white p-2.5 rounded-full shadow-[0_20px_50px_rgb(0,0,0,0.08)] border border-slate-100 flex items-center gap-3 relative z-20 group hover:border-indigo-200 transition-colors">
-            <div className="bg-indigo-50 p-3 rounded-full text-indigo-500">
-              📍
+          {/* DÜZELTİLEN KISIM: Arama Kutusu ve Altından Açılan Dropdown Liste */}
+          <div className="relative w-full max-w-2xl z-50 text-left">
+            {/* Arama Çubuğu */}
+            <div className="bg-white p-2.5 rounded-full shadow-[0_20px_50px_rgb(0,0,0,0.08)] border border-slate-100 flex items-center gap-3 relative group hover:border-indigo-200 transition-colors">
+              <div className="bg-indigo-50 p-3 rounded-full text-indigo-500 shrink-0">
+                📍
+              </div>
+              <input 
+                type="text" 
+                placeholder="Hangi şehri keşfetmek istersin? (Örn: Amsterdam...)" 
+                value={aramaMetni}
+                onChange={(e) => setAramaMetni(e.target.value)} 
+                className="flex-1 bg-transparent border-none focus:outline-none text-slate-700 font-medium placeholder:text-slate-400 text-sm md:text-base w-full min-w-0"
+              />
+              <Link 
+                to={ilkSonucId ? `/planla/${ilkSonucId}` : '#'} 
+                className="bg-slate-900 text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-indigo-600 transition-colors shadow-lg shadow-slate-900/20 whitespace-nowrap shrink-0"
+              >
+                Planlamaya Başla
+              </Link>
             </div>
-            <input 
-              type="text" 
-              placeholder="Hangi şehri keşfetmek istersin? (Örn: Amsterdam, Prag...)" 
-              value={aramaMetni}
-              onChange={(e) => setAramaMetni(e.target.value)} 
-              className="flex-1 bg-transparent border-none focus:outline-none text-slate-700 font-medium placeholder:text-slate-400 text-sm md:text-base"
-              // readOnly YAZISINI SİLDİM, ÇÜNKÜ O YAZMAYA ENGEL OLUR
-            />
-            <Link to="/planla/1" className="bg-slate-900 text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-indigo-600 transition-colors shadow-lg shadow-slate-900/20 whitespace-nowrap">
-              Planlamaya Başla
-            </Link>
+
+            {/* Şehir Listesi (Arama yapıldıkça çubuğun altından açılır) */}
+            {aramaMetni.length > 0 && (
+              <div className="absolute top-[110%] left-0 w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-64 overflow-y-auto transform transition-all duration-300">
+                {aramaSonuclari.length > 0 ? (
+                  aramaSonuclari.map((dest) => (
+                    <Link 
+                      key={dest.id} 
+                      to={`/planla/${dest.id}`} 
+                      className="flex items-center gap-4 px-6 py-4 hover:bg-indigo-50/50 border-b border-slate-50 transition-colors last:border-0"
+                    >
+                      <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0">
+                        <img 
+                          src={dest.coverImage || 'https://placehold.co/100x100/e2e8f0/64748b?text=Şehir'} 
+                          alt="" 
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-800 text-base">{dest.city}</h4>
+                        <p className="text-xs text-slate-500 font-medium">{dest.country}</p>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="px-6 py-8 text-center text-slate-500">
+                    <span className="text-3xl block mb-2 opacity-50">🧭</span>
+                    <span className="text-sm font-bold text-slate-600 block">"{aramaMetni}" adında bir şehir bulunamadı.</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* 3. Cam Efektli (Glassmorphism) Gerçekçi Özellik Kartları */}
+        {/* Cam Efektli Özellik Kartları */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-32">
           {[
             { icon: "🎛️", title: "Tam Kontrol Sende", desc: "Listeden ilgini çeken müzeleri, restoranları ve aktiviteleri seçerek tamamen kendi zevkine göre bir rota oluştur." },
@@ -72,7 +118,7 @@ function Home() {
           ))}
         </div>
 
-        {/* 4. Asimetrik & Özgün Şehir Galerisi */}
+        {/* Asimetrik & Özgün Şehir Galerisi (Aşağıdaki grid artık arama yapıldığında bozulmayacak, hep tüm şehirleri gösterecek) */}
         <div>
           <div className="flex flex-col md:flex-row justify-between items-end mb-10">
             <div>
@@ -93,7 +139,6 @@ function Home() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 
-                {/* Özgün Gradyan ve İçerik Yerleşimi */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent flex flex-col justify-between p-6 md:p-8">
                   <div className="flex justify-end">
                     <span className="bg-white/20 backdrop-blur-md text-white border border-white/30 text-xs font-black px-4 py-1.5 rounded-full shadow-lg">
