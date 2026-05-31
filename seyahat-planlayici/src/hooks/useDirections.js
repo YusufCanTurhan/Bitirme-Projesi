@@ -22,7 +22,7 @@ export function useDirections(routePlaces, onLegsUpdate) {
           location: { lat: p.lat, lng: p.lng },
           stopover: true,
         })),
-        travelMode: window.google.maps.TravelMode.WALKING,
+        travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
         if (status === 'OK') {
