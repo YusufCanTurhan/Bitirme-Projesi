@@ -1,4 +1,4 @@
- Kapsamlı Seyahat Bütçesi ve Rota Planlayıcı
+# Kapsamlı Seyahat Bütçesi ve Rota Planlayıcı
 
 Bu proje, kullanıcıların seyahat rotalarını interaktif bir şekilde planlayabildiği ve harcamalarını gerçek zamanlı olarak takip edebildiği modern bir front-end web uygulamasıdır. Gelişmiş sürükle-bırak (drag & drop) dinamikleri ve gerçekçi veri setleriyle profesyonel bir seyahat acentesi deneyimi sunmayı hedefler. 
 
