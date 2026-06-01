@@ -32,3 +32,5 @@ Anlık Bütçe Takibi: Kullanıcı bir mekanı gün planına sürüklediğinde, 
 Arama ve Filtreleme: Gezilecek yerler listesi içinde anlık metin araması yapabilen ve kategoriye (Müze, Aktivite, Yemek vb.) göre filtreleme sunan fonksiyonlar kodlanmıştır.
 
 Tarih Yönetimi: Gidiş ve dönüş tarihlerinin seçilebileceği HTML5 entegreli kullanıcı girdileri eklenmiştir.
+
+https://bitirme-projesi-tskf.vercel.app/
